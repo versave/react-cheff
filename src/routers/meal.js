@@ -3,11 +3,12 @@ const router = new express.Router();
 const sharp = require('sharp');
 const multer = require('multer');
 const Meal = require('../models/Meal');
+const auth = require('../middleware/auth');
 
 // @route POST /api/meals
 // @desc Create new meal
 // @access Private
-router.post('/api/meals', async(req, res) => {
+router.post('/api/meals', auth, async(req, res) => {
     const meal = new Meal({
         ...req.body
     });
@@ -32,7 +33,7 @@ router.get('/api/meals', (req, res) => {
 // @route DELETE /api/meals/:id
 // @desc Delete meal
 // @access Private
-router.delete('/api/meals/:id', async (req, res) => {
+router.delete('/api/meals/:id', auth, async (req, res) => {
     try {
         const meal = await Meal.findOneAndDelete({ _id: req.params.id });
 
