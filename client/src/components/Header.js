@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import Menu from './Menu';
 
 export default function Header() {
     function openMenu(e) {
@@ -11,12 +12,18 @@ export default function Header() {
     }
 
     return(
-        <header className="header">
-            <h1>Cheff Book</h1>
+        <Fragment>
+            <header className="header">
+                <h1>Cheff Book</h1>
 
-            <button className="header__btn" onClick={openMenu}>
-                <i className="fa fa-navicon"></i>
-            </button>
-        </header>
+                <button className="header__btn" onClick={openMenu}>
+                    <i className="fa fa-navicon"></i>
+                </button>
+
+                <button className="btn header__login">Login</button>
+            </header>
+
+            <Menu />
+        </Fragment>
     );
 }
