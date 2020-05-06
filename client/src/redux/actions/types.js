@@ -1,3 +1,5 @@
-export const CHANGE_STR = 'CHANGE_STR';
-export const TYPE_TWO = 'TYPE_TWO';
-export const TYPE_THREE = 'TYPE_THREE';
+export const GET_MEALS = 'GET_MEALS';
+export const GET_ERRORS = 'GET_ERRORS';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const SET_FILTERS = 'SET_FILTERS';
+export const TOGGLE_ITEM_MENU = 'TOGGLE_ITEM_MENU';

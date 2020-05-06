@@ -26,10 +26,11 @@ button {
 
     &--white {
         background: $white;
-        color: #000;
+        color: $red;
 
         &:hover {
-            background: #d4d4d4;
+            background: none;
+            color: #fff;
         }
     }
 

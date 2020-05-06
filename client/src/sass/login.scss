@@ -1,23 +1,8 @@
 .login {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 20;
-    background: rgba($color: #000000, $alpha: .8);
-
-    &__inner {
-        max-width: 500px;
-        padding: 20px 20px;
-        border-radius: 30px;
-        margin: 100px auto 0;
-        background: $red;
-
-        h2 {
-            font-size: 40px;
-            text-align: center;
-        }
+    h2 {
+        margin-bottom: 20px;
+        font-size: 35px;
+        text-align: center;
     }
 
     &__row {
@@ -29,13 +14,6 @@
             display: block;
             margin-bottom: 10px;
             font-size: 20px;
-        }
-
-        .field {
-            padding: 0 20px;
-            border: 0;
-            border-radius: 30px;
-            color: $red;
         }
     }
 

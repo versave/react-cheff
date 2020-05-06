@@ -24,5 +24,9 @@
        padding: 0;
        background: none;
        font-size: 22px;
+
+       &:hover {
+           color: #fff;
+       }
     }
 }

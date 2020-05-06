@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { changeString } from '../redux/actions/itemActions';
+//import { changeString } from '../redux/actions/itemActions';
 
 class TestComponent extends Component {
     state = {
@@ -8,7 +8,7 @@ class TestComponent extends Component {
     }
 
     handleChange = (e) => {
-        this.props.changeString(e.target.value);
+        //this.props.changeString(e.target.value);
     }
 
     render() {
@@ -30,4 +30,4 @@ const mapStateToProps = (state) => ({
     items: state.items
 });
 
-export default connect(mapStateToProps, { changeString })(TestComponent);
+//export default connect(mapStateToProps, { changeString })(TestComponent);
