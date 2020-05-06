@@ -60,8 +60,6 @@ router.patch('/api/meals/:id', auth, upload.single('meal'), async (req, res) => 
     const allowUpdates = ['name', 'ingredients', 'recipe', 'tags'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
 
-    console.log(req.body);
-
     if(Object.keys(req.body).length === 0 && req.body.constructor === Object) {
         return res.status(400).send({error: 'You must fill at least one filed in order to update meal'});
     }

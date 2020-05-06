@@ -1,0 +1,28 @@
+.search {
+    position: relative;
+
+    input {
+        display: block;
+        padding: 10px 46px 10px 10px;
+        border: 2px solid #fff;
+        border-radius: 30px;
+        background: none;
+        font-size: 20px;
+        color: #ffffff;
+
+        &::placeholder {
+            font-family: inherit;
+            color: inherit;
+        }
+    }
+
+    button {
+       position: absolute;
+       top: 11px;
+       right: 19px;
+       border: 0;
+       padding: 0;
+       background: none;
+       font-size: 22px;
+    }
+}

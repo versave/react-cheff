@@ -1,0 +1,18 @@
+.tag {
+    position: relative;
+    display: inline-block;
+    padding: 5px 15px 5px 25px;
+    border: 1px solid $red;
+    border-radius: 20px;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 9px;
+        left: 8px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: $red;
+    }
+}

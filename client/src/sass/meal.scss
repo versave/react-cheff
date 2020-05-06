@@ -1,0 +1,60 @@
+.meal {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0px 0px 0 0 $red;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: -90%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 5;
+        width: 200%;
+        height: 100%;
+        border-radius: 50%;
+        background: $black;
+    }
+
+    &__image {
+        border: 2px solid $red;
+        border-width: 0 2px 2px 2px;
+    }
+
+    &__content {
+        height: 100%;
+        border: 2px solid $red;
+        padding-bottom: 100px;
+        margin-top: -2px;
+        padding: 15px 20px 40px;
+        border-radius: 0 0 50px 50px;
+        background: $black;
+
+        h2 {
+            font-size: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid $red;
+            margin-bottom: 5px;
+        }
+    }
+
+    &__tags {
+        .tag {
+            margin: 10px 10px 0 0;
+        }
+    }
+
+    &__link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}

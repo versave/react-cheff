@@ -1,0 +1,27 @@
+.menu {
+    position: absolute;
+    top: 88px;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    transform: translateX(100%);
+    padding: 20px 20px 100px;
+    border-radius: 0 0 0 100px;
+    background: rgba(247, 97, 90, 0.9);
+    transition: transform .3s;
+
+    &.open {
+        transform: translateX(0);
+    }
+
+    .search {
+        margin-bottom: 40px;
+    }
+
+    &__filters {
+        h2 {
+            margin-bottom: 15px;
+            font-size: 30px;
+        }
+    }
+}

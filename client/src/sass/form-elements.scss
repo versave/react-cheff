@@ -20,6 +20,16 @@
 /* ------------------------------------------------------------ *\ 
     Checkbox
 \* ------------------------------------------------------------ */
+.checkboxes {
+    list-style: none;
+
+    li {
+        + li {
+            margin-top: 8px;
+        }
+    }
+}
+
 .checkbox {
     input {
         display: none;
@@ -29,7 +39,7 @@
             + label {
 
                 &:before {
-                    background: #000000;
+                    background: #fff;
                 }
             }
         }
@@ -37,18 +47,19 @@
 
     label {
         position: relative;
-        padding-left: 1.4em;
+        padding-left: 1.6em;
         font-size: 20px;
+        color: #fff;
         user-select: none;
 
         &:before {
             content: '';
             position: absolute;
-            top: .19em;
+            top: .13em;
             left: 0;
             width: .8em;
             height: .8em;
-            border: 1px solid #000;
+            border: 2px solid #fff;
         }
     }
 }
