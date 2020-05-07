@@ -23,8 +23,21 @@
     }
 
     &__image {
+        position: relative;
+        min-height: 300px;
         border: 2px solid $red;
         border-width: 0 2px 2px 2px;
+
+        figure {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50% 50%;
+        }
     }
 
     &__content {

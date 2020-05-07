@@ -7,10 +7,16 @@ import Footer from './Footer';
 import Meals from './Meals';
 import Login from './Login';
 import AddMeal from './AddMeal';
+import MealMenu from './MealMenu';
+import { loadUser } from './../redux/actions/userActions';
 
 class Wrapper extends Component {
+    componentDidMount() {
+        this.props.loadUser();
+    }
+
     render() {
-        const { itemMenu } = this.props.user;
+        const { itemMenu, loginMenu } = this.props.user;
 
         return(
             <div className="wrapper">
@@ -20,6 +26,7 @@ class Wrapper extends Component {
                     <Meals />            
                 </main>
 
+                {loginMenu ? <Login /> : null}
                 {itemMenu ? <AddMeal /> : null}
                 
                 <Footer />
@@ -32,4 +39,4 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { })(Wrapper);
+export default connect(mapStateToProps, { loadUser })(Wrapper);

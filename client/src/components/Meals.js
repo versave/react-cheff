@@ -42,8 +42,11 @@ class Meals extends Component {
                             return(
                                 <div key={meal._id} className="col col--1of4">
                                     <Meal
+                                        id={meal._id}
                                         name={meal.name}
                                         tags={meal.tags}
+                                        image={meal.hasImage}
+                                        image64={meal.image64}
                                     />
                                 </div>
                             );

@@ -25,12 +25,16 @@ router.post('/api/meals', auth, upload.single('meal'), async(req, res) => {
     let buffer = null;
     
     if(req.file) {
-        buffer = await sharp(req.file.buffer).resize({ width: 300, height: 300 }).webp().toBuffer();
+        buffer = await sharp(req.file.buffer).resize({ width: 800, height: 800 }).webp().toBuffer();
     }
+
+    req.body.ingredients = req.body.ingredients.split(',')
+    req.body.tags = req.body.tags.split(',')
     
     const meal = new Meal({
         ...req.body,
-        image: buffer
+        image: buffer,
+        hasImage: buffer ? true : false
     });
     
     try {
@@ -113,6 +117,24 @@ router.delete('/api/meals/:id', auth, async (req, res) => {
         res.send(meal);
     } catch(e) {
         res.status(500).send();
+    }
+});
+
+// @route GET /api/products/:id/image
+// @desc Get product image
+// @access Public
+router.get('/api/meals/:id/image', async (req, res) => {
+    try {
+        const meal = await Meal.findById(req.params.id);
+        
+        if(!meal || !meal.image) {
+            throw new Error();
+        }
+
+        res.set('Content-Type', 'image/webp');
+        res.send(meal.image);
+    } catch (e) {
+        res.status(404).send();
     }
 });
 

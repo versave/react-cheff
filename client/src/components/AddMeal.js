@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toggleItemMenu } from '../redux/actions/userActions';
+import { addMeal } from '../redux/actions/mealActions';
 
 class AddMeal extends Component {
     state = {
-        ingredients: [],
-        tags: [],
-        recipe: ''
+        image: null,
+        ingredients: [''],
+        tags: [''],
+        recipe: '',
+        uploadBg: '',
+        loading: false,
+        msg: ''
     }
 
     openItemMenu = (e) => {
@@ -14,7 +19,112 @@ class AddMeal extends Component {
         this.props.toggleItemMenu(false);
     }
 
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+
+        if(e.target.type === 'file' && e.target.files[0] !== undefined) {
+            this.setState({ image: e.target.files[0] });
+
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.setState({ uploadBg: e.target.result });
+            };
+
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    }
+
+    onArrayChange = (e) => {
+        const target = e.target;
+        const fields = target.parentNode.childNodes;
+        const length = fields.length;
+
+        fields.forEach((field, index) => {
+            const type = target.getAttribute('id').split('-')[0];
+
+            if(e.target.getAttribute('id') == field.getAttribute('id')) {
+                this.setState(state => {
+                    state[type][index] = target.value;
+
+                    return state[type][index];
+                })
+            }
+        });
+    }
+
+    onFocus = (e) => {
+        const target = e.target;
+        const fields = target.parentNode.childNodes;
+        const length = fields.length;
+
+        fields.forEach((field, index) => {
+            const type = target.getAttribute('id').split('-')[0];
+
+            if(target == field && index + 1 == length) {
+                this.setState(state => {
+                    state[type].push('');
+                    return state[type];
+                })
+            }
+        });
+    }
+
+    validateInput(obj) {
+        return new Promise((resolve, reject) => {
+            Object.keys(obj)
+                .forEach(key => {
+                    if(obj[key] === '') {
+                        reject('Please fill all text fields');
+                    } else if(key === 'image' && obj[key] !== null) {
+                        if(!obj[key].type.match(/\/(jpg|jpeg|png)$/)) {
+                            reject('File format must be .jpg, .jpeg or .png');
+                        } else if(obj[key].size > 3000000){
+                            reject('File size too large. Must be under 3mb.');
+                        }
+                    }
+                });
+
+            resolve();
+        });
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        const ingredients = this.state.ingredients.filter(el => el !== '' ? true : false);
+        const tags = this.state.tags.filter(el => el !== '' ? true : false);
+        const meal = {
+            name: this.state.name,
+            image: this.state.image,
+            ingredients,
+            tags,
+            recipe: this.state.recipe
+        }
+
+        console.log(meal)
+
+        /*
+        this.validateInput(meal).then(() => {
+            const formData = new FormData();
+
+            formData.append('name', meal.name);
+            formData.append('meal', meal.image);
+            formData.append('ingredients', meal.ingredients);
+            formData.append('tags', meal.tags);
+            formData.append('recipe', meal.recipe);
+
+            this.props.addMeal(formData);
+        })
+        .catch(e => {
+            this.setState({ msg: e });
+        })
+        */
+    }
+
     render() {
+        const { ingredients, tags } = this.state;
+
         return (
             <div className="popup">
                 <div className="popup__inner popup__inner--wide">
@@ -22,14 +132,14 @@ class AddMeal extends Component {
                         <i className="fa fa-close"></i>
                     </button>
 
-                    <form className="form-add">
+                    <form className="form-add" onSubmit={this.onSubmit}>
                         <h2>Add meal</h2>
 
                         <div className="form-add__container">
                             <div className="form-add__image">
                                 <div className="form-add__row">
                                     <div className="file">
-                                        <input type="file" id="file" name="file" />
+                                        <input type="file" id="file" name="file" onChange={this.onChange} />
 
                                         <label htmlFor="file">
                                             <i className="fa fa-image"></i>
@@ -38,7 +148,7 @@ class AddMeal extends Component {
                                         </label>
                                     </div>
 
-                                    <figure style={{backgroundImage: 'url(splash_nilfgaard.png)'}}></figure>
+                                    <figure style={{backgroundImage: `url(${this.state.uploadBg !== '' ? this.state.uploadBg : 'splash_nilfgaard.png'})`}}></figure>
                                 </div>
                             </div>
 
@@ -46,14 +156,29 @@ class AddMeal extends Component {
                                 <div className="form-add__row">
                                     <label htmlFor="name">Name</label>
 
-                                    <input type="text" className="field" id="name" name="name" placeholder="Name" />
+                                    <input type="text" className="field" id="name" name="name" placeholder="Name" onChange={this.onChange} />
                                 </div>
 
                                 <div className="form-add__row">
                                     <label htmlFor="ingredient-0">Ingredients</label>
 
                                     <div className="form-add__group">
-                                        <input type="text" className="field" id="ingredient-0" name="ingredient-0" placeholder="Ingredient" />
+                                        {
+                                            ingredients.map((name, index) => {
+                                                return (
+                                                    <input
+                                                        key={index}
+                                                        type="text"
+                                                        className="field"
+                                                        id={`ingredients-${index}`}
+                                                        name={`ingredient-${index}`}
+                                                        placeholder="Ingredient"
+                                                        onFocus={this.onFocus}
+                                                        onChange={this.onArrayChange}
+                                                    />
+                                                );
+                                            })
+                                        }
                                     </div>
                                 </div>
 
@@ -61,14 +186,29 @@ class AddMeal extends Component {
                                     <label htmlFor="tag-0">Tags</label>
 
                                     <div className="form-add__group">
-                                        <input type="text" className="field" id="tag-0" name="tag-0" placeholder="Tag" />
+                                        {
+                                            tags.map((name, index) => {
+                                                return (
+                                                    <input
+                                                        key={index}
+                                                        type="text"
+                                                        className="field"
+                                                        id={`tags-${index}`}
+                                                        name={`tag-${index}`}
+                                                        placeholder="Tag"
+                                                        onFocus={this.onFocus}
+                                                        onChange={this.onArrayChange}
+                                                    />
+                                                );
+                                            })
+                                        }
                                     </div>
                                 </div>
 
                                 <div className="form-add__row">
                                     <label htmlFor="recipe">Recipe</label>
 
-                                    <textarea className="field field--textarea" id="recipe" name="recipe" placeholder="Recipe"></textarea>
+                                    <textarea className="field field--textarea" id="recipe" name="recipe" placeholder="Recipe" onChange={this.onChange}></textarea>
                                 </div>
                             </div>
                         </div>
@@ -87,4 +227,4 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { toggleItemMenu })(AddMeal);
+export default connect(mapStateToProps, { toggleItemMenu, addMeal })(AddMeal);

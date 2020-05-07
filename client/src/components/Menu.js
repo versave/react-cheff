@@ -24,7 +24,7 @@ class Menu extends Component {
         return (
             <div className="menu">
                 <div className="menu__inner">
-                    <button className="btn btn--white" onClick={this.openItemMenu}>Add meal</button>
+                    {this.props.user.isAuthenticated ? <button className="btn btn--white" onClick={this.openItemMenu}>Add meal</button> : null}
 
                     <Search />
 

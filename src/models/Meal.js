@@ -4,6 +4,10 @@ const mealSchema = new mongoose.Schema({
     image: {
         type: Buffer
     },
+    hasImage: {
+        type: Boolean,
+        required: true
+    },
     name: {
         type: String,
         required: true,

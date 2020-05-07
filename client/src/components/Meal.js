@@ -7,10 +7,18 @@ class Meal extends Component {
     }
 
     render() {
+        let image = null;
+
+        if(this.props.image && this.props.image64) {
+            image = `data:image/jpg;base64,${this.props.image64}`;
+        } else if(this.props.image) {
+            image = `/api/meals/${this.props.id}/image`;
+        }
+
         return (
             <div className="meal">
                 <div className="meal__image">
-                    <img src="splash_nilfgaard.png" />
+                    <figure style={{backgroundImage: `url(${image ? image : 'splash_nilfgaard.png'})`}}></figure>
                 </div>
 
                 <div className="meal__content">

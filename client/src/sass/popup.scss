@@ -40,4 +40,21 @@
             color: #fff;
         }
     }
+
+    &--large {
+        .popup__inner {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            max-width: none;
+            margin: 0;
+        }
+
+        .popup__close {
+            top: 20px;
+            right: 48px;
+        }
+    }
 }
