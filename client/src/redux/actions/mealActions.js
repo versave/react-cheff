@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_MEALS, SET_FILTERS, ADD_MEAL, TOGGLE_ITEM_MENU } from './types';
+import { GET_MEALS, SET_FILTERS, ADD_MEAL, TOGGLE_ITEM_MENU, CLEAR_ERRORS } from './types';
 import { tokenConfig } from './userActions';
 import { returnErrors } from './errorActions';
 
@@ -26,6 +26,10 @@ export const addMeal = (meal) => (dispatch, getState) => {
         .then(res => {
             //dispatch(setProductsLoading());
             //dispatch(setProductsLoading());
+
+            dispatch({
+                type: CLEAR_ERRORS
+            })
 
             dispatch({
                 type: TOGGLE_ITEM_MENU,

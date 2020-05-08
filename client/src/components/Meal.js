@@ -1,9 +1,16 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { setMeal } from './../redux/actions/userActions'
 import Tag from './Tag';
 
 class Meal extends Component {
     constructor() {
         super();
+    }
+
+    openMeal = () => {
+        const meal = this.props;
+        this.props.setMeal(meal);
     }
 
     render() {
@@ -16,7 +23,7 @@ class Meal extends Component {
         }
 
         return (
-            <div className="meal">
+            <div className="meal" onClick={this.openMeal}>
                 <div className="meal__image">
                     <figure style={{backgroundImage: `url(${image ? image : 'splash_nilfgaard.png'})`}}></figure>
                 </div>
@@ -37,11 +44,14 @@ class Meal extends Component {
                         }
                     </div>
                 </div>
-
-                <a className="meal__link"></a>
             </div>
         );
     }
 }
 
-export default Meal;
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+
+export default connect(mapStateToProps, { setMeal })(Meal);

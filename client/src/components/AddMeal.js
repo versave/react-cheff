@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toggleItemMenu } from '../redux/actions/userActions';
 import { addMeal } from '../redux/actions/mealActions';
+import ErrorAlert from './ErrorAlert';
 
 class AddMeal extends Component {
     state = {
@@ -74,7 +75,7 @@ class AddMeal extends Component {
         return new Promise((resolve, reject) => {
             Object.keys(obj)
                 .forEach(key => {
-                    if(obj[key] === '') {
+                    if(obj[key] === '' || Array.isArray(obj[key]) && !obj[key].length) {
                         reject('Please fill all text fields');
                     } else if(key === 'image' && obj[key] !== null) {
                         if(!obj[key].type.match(/\/(jpg|jpeg|png)$/)) {
@@ -130,6 +131,8 @@ class AddMeal extends Component {
 
                     <form className="form-add" onSubmit={this.onSubmit}>
                         <h2>Add meal</h2>
+
+                        {this.state.msg ? <ErrorAlert msg={this.state.msg} /> : null}
 
                         <div className="form-add__container">
                             <div className="form-add__image">

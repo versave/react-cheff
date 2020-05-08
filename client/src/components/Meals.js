@@ -45,6 +45,8 @@ class Meals extends Component {
                                         id={meal._id}
                                         name={meal.name}
                                         tags={meal.tags}
+                                        ingredients={meal.ingredients}
+                                        recipe={meal.recipe}
                                         image={meal.hasImage}
                                         image64={meal.image64}
                                     />

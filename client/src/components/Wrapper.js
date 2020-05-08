@@ -16,7 +16,7 @@ class Wrapper extends Component {
     }
 
     render() {
-        const { itemMenu, loginMenu } = this.props.user;
+        const { itemMenu, loginMenu, openedMeal } = this.props.user;
 
         return(
             <div className="wrapper">
@@ -28,6 +28,7 @@ class Wrapper extends Component {
 
                 {loginMenu ? <Login /> : null}
                 {itemMenu ? <AddMeal /> : null}
+                {openedMeal ? <MealMenu /> : null}
                 
                 <Footer />
             </div>

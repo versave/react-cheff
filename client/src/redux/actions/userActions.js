@@ -8,7 +8,8 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    SET_MEAL
 } from './types';
 import { returnErrors } from './errorActions';
 
@@ -81,6 +82,13 @@ export const logout = () => {
         type: LOGOUT_SUCCESS
     }; 
 };
+
+export const setMeal = (meal) => dispatch => {
+    return dispatch({
+        type: SET_MEAL,
+        payload: meal
+    })
+}
 
 // Setup config/headers and token
 export const tokenConfig = (getState) => {

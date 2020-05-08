@@ -23,6 +23,10 @@ input[type=number]::-webkit-outer-spin-button {
 \* ------------------------------------------------------------ */
 
 .form-add {
+    .error {
+        margin: 30px auto 35px;
+    }
+
     h2 {
         margin-bottom: 30px;
         font-size: 35px;

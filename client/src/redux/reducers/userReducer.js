@@ -7,14 +7,15 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
+    SET_MEAL,
 } from '../actions/types';
 
 const initialState = {
-    itemMenu: false,
     loginMenu: false,
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     isLoading: false,
+    openedMeal: null,
     user: null
 };
 
@@ -29,6 +30,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loginMenu: action.payload
+            }
+        case SET_MEAL:
+            return {
+                ...state,
+                openedMeal: action.payload
             }
         case USER_LOADING:
             return {
