@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { toggleLoginMenu } from '../redux/actions/userActions';
 import { login } from '../redux/actions/userActions';
 import { clearErrors } from '../redux/actions/errorActions';
+import ErrorAlert from './ErrorAlert';
 
 class Login extends Component {
     state = {
@@ -17,6 +18,12 @@ class Login extends Component {
         error: PropTypes.object.isRequired,
         login: PropTypes.func.isRequired,
         clearErrors: PropTypes.func.isRequired
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.error.msg.message !== this.props.error.msg.message) {
+            this.setState({msg: this.props.error.msg.message});
+        }
     }
 
     closeLogin = (e) => {
@@ -52,6 +59,8 @@ class Login extends Component {
 
                     <form onSubmit={this.onSubmit}>
                         <h2>Login</h2>
+
+                        {this.state.msg ? <ErrorAlert msg={this.state.msg} /> : null}
 
                         <div className="login__row">
                             <label htmlFor="email">Email</label>

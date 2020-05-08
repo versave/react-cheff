@@ -7,7 +7,8 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS,
+    CLEAR_ERRORS
 } from './types';
 import { returnErrors } from './errorActions';
 
@@ -57,6 +58,10 @@ export const login = ({ email, password }) => dispatch => {
 
     axios.post('/api/users/login', body, config)
         .then(res => {
+            dispatch({
+                type: CLEAR_ERRORS
+            })
+
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data

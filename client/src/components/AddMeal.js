@@ -102,9 +102,6 @@ class AddMeal extends Component {
             recipe: this.state.recipe
         }
 
-        console.log(meal)
-
-        /*
         this.validateInput(meal).then(() => {
             const formData = new FormData();
 
@@ -119,7 +116,6 @@ class AddMeal extends Component {
         .catch(e => {
             this.setState({ msg: e });
         })
-        */
     }
 
     render() {
