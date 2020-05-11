@@ -41,4 +41,15 @@ button {
             background: #6d3c3c;
         }
     }
+
+    &--danger {
+        border-color: $black;
+        background: $black;
+        color: $red;
+
+        &:hover {
+            background: $red;
+            color: $black;
+        }
+    }
 }

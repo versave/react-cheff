@@ -23,6 +23,12 @@
         padding: 20px;
         resize: none;
     }
+
+    &--transparent {
+        border: 2px solid #fff;
+        background: none;
+        color: #ffffff;
+    }
 }
 
 /* ------------------------------------------------------------ *\ 

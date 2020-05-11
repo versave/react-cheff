@@ -61,7 +61,7 @@ router.get('/api/meals', (req, res) => {
 // @access Private
 router.patch('/api/meals/:id', auth, upload.single('meal'), async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowUpdates = ['name', 'ingredients', 'recipe', 'tags'];
+    const allowUpdates = ['name', 'meal', 'ingredients', 'recipe', 'tags', 'image'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
 
     if(Object.keys(req.body).length === 0 && req.body.constructor === Object) {
@@ -72,10 +72,14 @@ router.patch('/api/meals/:id', auth, upload.single('meal'), async (req, res) => 
         return res.status(404).send({ error: 'Invalid updates' });
     }
 
+    req.body.ingredients = req.body.ingredients.split(',')
+    req.body.tags = req.body.tags.split(',')
+
     try {
         const meal = await Meal.findOne({ _id: req.params.id });
         let mealCopy;
         let buffer = null;
+        let image64 = null;
 
         if(!meal) {
             return res.status(404).send();
@@ -85,15 +89,15 @@ router.patch('/api/meals/:id', auth, upload.single('meal'), async (req, res) => 
         
         if(req.file !== undefined) {
             buffer = await sharp(req.file.buffer).resize({ width: 300, height: 300 }).webp().toBuffer();
-            let image64 = req.file.buffer.toString('base64');
+            image64 = req.file.buffer.toString('base64');
 
             meal.image = buffer;
-
-            mealCopy = {
-                ...meal._doc,
-                image64,
-            };
         }
+        
+        mealCopy = {
+            ...meal._doc,
+            image64,
+        };
         
         await meal.save();
         

@@ -39,14 +39,17 @@ class AddMeal extends Component {
     onArrayChange = (e) => {
         const target = e.target;
         const fields = target.parentNode.childNodes;
-        const length = fields.length;
 
         fields.forEach((field, index) => {
             const type = target.getAttribute('id').split('-')[0];
 
-            if(e.target.getAttribute('id') == field.getAttribute('id')) {
+            if(e.target.getAttribute('id') === field.getAttribute('id')) {
                 this.setState(state => {
-                    state[type][index] = target.value;
+                    if(target.getAttribute('id').split('-')[0] === 'tags') {
+                        state[type][index] = target.value.toLowerCase();
+                    } else {
+                        state[type][index] = target.value;
+                    }
 
                     return state[type][index];
                 })
@@ -62,7 +65,7 @@ class AddMeal extends Component {
         fields.forEach((field, index) => {
             const type = target.getAttribute('id').split('-')[0];
 
-            if(target == field && index + 1 == length) {
+            if(target === field && index + 1 === length) {
                 this.setState(state => {
                     state[type].push('');
                     return state[type];
@@ -93,8 +96,8 @@ class AddMeal extends Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        const ingredients = this.state.ingredients.filter(el => el !== '' ? true : false);
-        const tags = this.state.tags.filter(el => el !== '' ? true : false);
+        const ingredients = this.state.ingredients.filter(el => el === '' ? false : true);
+        const tags = this.state.tags.filter(el => el === '' ? false : true);
         const meal = {
             name: this.state.name,
             image: this.state.image,
@@ -197,6 +200,7 @@ class AddMeal extends Component {
                                                         placeholder="Tag"
                                                         onFocus={this.onFocus}
                                                         onChange={this.onArrayChange}
+                                                        style={{textTransform: 'lowercase'}}
                                                     />
                                                 );
                                             })

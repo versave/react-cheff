@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setMeal } from './../redux/actions/userActions'
 import Tag from './Tag';

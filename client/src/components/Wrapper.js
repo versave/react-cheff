@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import TestComponent from './TestComponent';
 import Header from './Header';
 import Footer from './Footer';
 import Meals from './Meals';

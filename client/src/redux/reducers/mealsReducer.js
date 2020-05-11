@@ -1,4 +1,4 @@
-import { GET_MEALS, SET_FILTERS, ADD_MEAL } from '../actions/types';
+import { GET_MEALS, SET_FILTERS, ADD_MEAL, EDIT_MEAL, DELETE_MEAL } from '../actions/types';
 
 const initialState = {
     meals: [],
@@ -9,15 +9,17 @@ const initialState = {
 export default function(state = initialState, action) {
     switch(action.type) {
         case ADD_MEAL:
-            const existingFilters = [];
+            const addFilters = [];
 
             return {
                 ...state,
                 meals: [action.payload, ...state.meals],
                 filters: [action.payload.tags, ...state.filters].filter(filter => {
-                    if(!existingFilters.indexOf(filter)) {
-                        existingFilters.push(filter);
+                    if(!addFilters.indexOf(filter)) {
+                        addFilters.push(filter);
                         return filter;
+                    } else {
+                        return false;
                     }
                 }),
                 loaded: true
@@ -27,6 +29,43 @@ export default function(state = initialState, action) {
                 ...state,
                 meals: action.payload,
                 loaded: true
+            }
+        case EDIT_MEAL:
+            const [id, mealObject] = action.payload;
+            const editFilters = [];
+
+            return {
+                ...state,
+                meals: state.meals.map(meal => {
+
+                    if(meal._id === id) {
+                        meal = mealObject
+                    }
+
+                    return meal;
+                }),
+                filters: [action.payload.tags, ...state.filters].filter(filter => {
+                    if(!editFilters.indexOf(filter)) {
+                        editFilters.push(filter);
+                        return filter;
+                    } else {
+                        return false;
+                    }
+                })
+            }
+        case DELETE_MEAL:
+            const [deletedId, tags] = action.payload;
+
+            return {
+                ...state,
+                meals: state.meals.filter(meal => meal._id !== deletedId),
+                filters: state.filters.filter(filter => {
+                    if(tags.indexOf(filter) !== -1) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                })
             }
         case SET_FILTERS:
             return {
