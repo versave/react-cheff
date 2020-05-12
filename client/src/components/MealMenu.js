@@ -192,7 +192,7 @@ class MealMenu extends Component {
         });
     }
 
-    deleteProduct = (e) => {
+    deleteMeal = (e) => {
         e.preventDefault();
 
         this.props.deleteMeal(this.props.user.openedMeal.id);
@@ -270,7 +270,7 @@ class MealMenu extends Component {
                     editMode ? <button className="btn" onClick={this.resetState}>Back</button>
                     : <button className="btn" onClick={this.toggleEditMode}>Edit</button>
                 }
-                {editMode ? <button className="btn btn--danger" onClick={this.deleteProduct}>Delete Meal</button> : null}
+                {editMode ? <button className="btn btn--danger" onClick={this.deleteMeal}>Delete Meal</button> : null}
             </Fragment>
         );
 

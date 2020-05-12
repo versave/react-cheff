@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Search from './Search';
 import Checkbox from './Checkbox';
 import { toggleItemMenu } from '../redux/actions/userActions';
+import { filterTags } from '../redux/actions/mealActions';
 
 class Menu extends Component {
     state = {
@@ -18,6 +19,10 @@ class Menu extends Component {
     openItemMenu = (e) => {
         e.preventDefault();
         this.props.toggleItemMenu(true);
+    }
+
+    filterMeals = (name, checked) => {
+        this.props.filterTags(name, checked);
     }
 
     render() {
@@ -39,7 +44,7 @@ class Menu extends Component {
                                     .map((filter, index) => {
                                         return(
                                             <li key={index}>
-                                                <Checkbox index={index} name={filter} />
+                                                <Checkbox index={index} name={filter} onChange={this.filterMeals} />
                                             </li>
                                         );
                                     })
@@ -57,4 +62,4 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { toggleItemMenu })(Menu);
+export default connect(mapStateToProps, { toggleItemMenu, filterTags })(Menu);

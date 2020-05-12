@@ -1,8 +1,9 @@
-import { GET_MEALS, SET_FILTERS, ADD_MEAL, EDIT_MEAL, DELETE_MEAL } from '../actions/types';
+import { GET_MEALS, SET_FILTERS, ADD_MEAL, EDIT_MEAL, DELETE_MEAL, SET_ACTIVE_FILTERS } from '../actions/types';
 
 const initialState = {
     meals: [],
     filters: [],
+    activeFilters: [],
     loaded: false
 };
 
@@ -71,6 +72,17 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 filters: action.payload
+            }
+        case SET_ACTIVE_FILTERS:
+            return {
+                ...state,
+                activeFilters: [action.payload.filter, ...state.activeFilters].filter(filter => {
+                    if(!action.payload.checked && filter === action.payload.filter) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                })
             }
         default:
             return state;

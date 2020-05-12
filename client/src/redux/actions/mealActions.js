@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_MEALS, SET_FILTERS, ADD_MEAL, TOGGLE_ITEM_MENU, CLEAR_ERRORS, EDIT_MEAL, SET_MEAL, DELETE_MEAL } from './types';
+import { GET_MEALS, SET_FILTERS, ADD_MEAL, TOGGLE_ITEM_MENU, CLEAR_ERRORS, EDIT_MEAL, SET_MEAL, DELETE_MEAL, SET_ACTIVE_FILTERS } from './types';
 import { tokenConfig } from './userActions';
 import { returnErrors } from './errorActions';
 
@@ -77,4 +77,11 @@ export const deleteMeal = (id) => (dispatch, getState) => {
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status));
         });
+};
+
+export const filterTags = (filter, checked) => dispatch => {
+    dispatch({
+        type: SET_ACTIVE_FILTERS,
+        payload: {filter, checked}
+    })
 };
