@@ -9,6 +9,8 @@ import AddMeal from './AddMeal';
 import MealMenu from './MealMenu';
 import { loadUser } from './../redux/actions/userActions';
 
+export const placeholderImage = './placeholder.png';
+
 class Wrapper extends Component {
     componentDidMount() {
         this.props.loadUser();

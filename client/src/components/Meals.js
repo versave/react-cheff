@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadMeals, setFilters } from './../redux/actions/mealActions';
+import { loadMeals, buildFilters } from './../redux/actions/mealActions';
 import Meal from './Meal';
 
 class Meals extends Component {
@@ -16,33 +16,22 @@ class Meals extends Component {
 
     componentDidUpdate() {
         if(this.state.filters && !this.props.meals.filters.length) {
-            this.props.setFilters(this.state.filters);
+            this.props.buildFilters(this.state.filters);
         }
     }
 
     render() {
         const { meals } = this.props.meals;
         const filters = this.props.meals.activeFilters;
-        let className = 'col col--1of4';
 
         return (
             <div className="meals">
                 <div className="cols">
                     {
                         meals.map(meal => {
-                            meal
-                                .tags
-                                .forEach(tag => {
-                                    if(this.state.filters.indexOf(tag) === -1) {
-                                       this
-                                        .state
-                                        .filters
-                                        .push(tag);
-                                    }
-                                });
-                            
                             const boolsArr = [];
                             const tags = meal.tags;
+                            let className = 'col col--1of4';
 
                             tags.forEach(tag => {
                                 if(filters.indexOf(tag) !== -1 && filters.length) {
@@ -57,6 +46,8 @@ class Meals extends Component {
                             } else if(boolsArr.indexOf(true) === -1 && filters.length) {
                                 className = 'col col--1of4 hidden';
                             }
+
+                            if(meal.visible === 'hidden') className += ' hidden';
 
                             return(
                                 <div key={meal._id} className={className}>
@@ -84,4 +75,4 @@ const mapStateToProps = (state) => ({
     meals: state.meals
 });
 
-export default connect(mapStateToProps, { loadMeals, setFilters })(Meals);
+export default connect(mapStateToProps, { loadMeals, buildFilters })(Meals);

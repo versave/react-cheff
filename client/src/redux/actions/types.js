@@ -1,7 +1,6 @@
 export const GET_MEALS = 'GET_MEALS';
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
-export const SET_FILTERS = 'SET_FILTERS';
 export const TOGGLE_ITEM_MENU = 'TOGGLE_ITEM_MENU';
 export const TOGGLE_LOGIN_MENU = 'TOGGLE_LOGIN_MENU';
 export const USER_LOADED = 'USER_LOADED';
@@ -15,3 +14,6 @@ export const SET_MEAL = 'SET_MEAL';
 export const EDIT_MEAL = 'EDIT_MEAL';
 export const DELETE_MEAL = 'DELETE_MEAL';
 export const SET_ACTIVE_FILTERS = 'SET_ACTIVE_FILTERS';
+export const RESET_ACTIVE_FILTERS = 'RESET_ACTIVE_FILTERS';
+export const BUILD_FILTERS = 'BUILD_FILTERS';
+export const SEARCH_MEALS = 'SEARCH_MEALS';

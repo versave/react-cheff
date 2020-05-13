@@ -3,21 +3,20 @@ import { connect } from 'react-redux';
 import { setMeal } from './../redux/actions/userActions'
 import Tag from './Tag';
 
+import { placeholderImage } from './Wrapper';
+
 class Meal extends Component {
     constructor() {
         super();
     }
 
     openMeal = () => {
-        const meal = this.props;
-        this.props.setMeal(meal);
+        const mealId = this.props.id;
+        this.props.setMeal(mealId);
     }
 
     render() {
         let image = null;
-        // let className = 'meal';
-        // const boolsArr = [];
-        // const { tags, filters } = this.props;
 
         if(this.props.image && this.props.image64) {
             image = `data:image/jpg;base64,${this.props.image64}`;
@@ -25,24 +24,10 @@ class Meal extends Component {
             image = `/api/meals/${this.props.id}/image`;
         }
 
-        // tags.forEach(tag => {
-        //     if(filters.indexOf(tag) !== -1 && filters.length) {
-        //         boolsArr.push(true);
-        //     } else {
-        //         boolsArr.push(false);
-        //     }
-        // });
-
-        // if(boolsArr.indexOf(true) !== -1) {
-        //     className = 'meal';
-        // } else if(boolsArr.indexOf(true) === -1 && filters.length) {
-        //     className = 'meal hidden';
-        // }
-        
         return (
             <div className="meal" onClick={this.openMeal}>
                 <div className="meal__image">
-                    <figure style={{backgroundImage: `url(${image ? image : 'splash_nilfgaard.png'})`}}></figure>
+                    <figure style={{backgroundImage: `url(${image ? image : placeholderImage})`}}></figure>
                 </div>
 
                 <div className="meal__content">

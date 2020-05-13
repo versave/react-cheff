@@ -11,7 +11,8 @@ import {
     CLEAR_ERRORS,
     SET_MEAL
 } from './types';
-import { returnErrors } from './errorActions';
+import { returnErrors, clearErrors } from './errorActions';
+import store from './../store';
 
 export const toggleItemMenu = (toggle) => dispatch => {
     return dispatch({
@@ -59,9 +60,7 @@ export const login = ({ email, password }) => dispatch => {
 
     axios.post('/api/users/login', body, config)
         .then(res => {
-            dispatch({
-                type: CLEAR_ERRORS
-            })
+            dispatch(clearErrors());
 
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -83,7 +82,9 @@ export const logout = () => {
     }; 
 };
 
-export const setMeal = (meal) => dispatch => {
+export const setMeal = (id) => dispatch => {
+    const meal = store.getState().meals.meals.find(item => item._id === id);
+
     return dispatch({
         type: SET_MEAL,
         payload: meal

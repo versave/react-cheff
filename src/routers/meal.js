@@ -61,7 +61,7 @@ router.get('/api/meals', (req, res) => {
 // @access Private
 router.patch('/api/meals/:id', auth, upload.single('meal'), async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowUpdates = ['name', 'meal', 'ingredients', 'recipe', 'tags', 'image'];
+    const allowUpdates = ['name', 'meal', 'ingredients', 'recipe', 'tags', 'image', 'hasImage'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
 
     if(Object.keys(req.body).length === 0 && req.body.constructor === Object) {

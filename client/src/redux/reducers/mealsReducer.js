@@ -1,4 +1,4 @@
-import { GET_MEALS, SET_FILTERS, ADD_MEAL, EDIT_MEAL, DELETE_MEAL, SET_ACTIVE_FILTERS } from '../actions/types';
+import { GET_MEALS, ADD_MEAL, EDIT_MEAL, DELETE_MEAL, SET_ACTIVE_FILTERS, RESET_ACTIVE_FILTERS, BUILD_FILTERS, SEARCH_MEALS } from '../actions/types';
 
 const initialState = {
     meals: [],
@@ -10,19 +10,9 @@ const initialState = {
 export default function(state = initialState, action) {
     switch(action.type) {
         case ADD_MEAL:
-            const addFilters = [];
-
             return {
                 ...state,
                 meals: [action.payload, ...state.meals],
-                filters: [action.payload.tags, ...state.filters].filter(filter => {
-                    if(!addFilters.indexOf(filter)) {
-                        addFilters.push(filter);
-                        return filter;
-                    } else {
-                        return false;
-                    }
-                }),
                 loaded: true
             }
         case GET_MEALS: 
@@ -33,7 +23,6 @@ export default function(state = initialState, action) {
             }
         case EDIT_MEAL:
             const [id, mealObject] = action.payload;
-            const editFilters = [];
 
             return {
                 ...state,
@@ -44,14 +33,6 @@ export default function(state = initialState, action) {
                     }
 
                     return meal;
-                }),
-                filters: [action.payload.tags, ...state.filters].filter(filter => {
-                    if(!editFilters.indexOf(filter)) {
-                        editFilters.push(filter);
-                        return filter;
-                    } else {
-                        return false;
-                    }
                 })
             }
         case DELETE_MEAL:
@@ -68,10 +49,16 @@ export default function(state = initialState, action) {
                     }
                 })
             }
-        case SET_FILTERS:
+        case BUILD_FILTERS:
+            let filtersArr = [];
+
+            state.meals.forEach(meal => {
+                filtersArr = filtersArr.concat(meal.tags);
+            });
+
             return {
                 ...state,
-                filters: action.payload
+                filters: filtersArr
             }
         case SET_ACTIVE_FILTERS:
             return {
@@ -83,6 +70,30 @@ export default function(state = initialState, action) {
                         return true;
                     }
                 })
+            }
+        case RESET_ACTIVE_FILTERS:
+            return {
+                ...state,
+                activeFilters: []
+            }
+        case SEARCH_MEALS:
+            return {
+                ...state,
+                meals: state.meals.map(meal => {
+                    if(action.payload === '') {
+                        meal.visible = '';
+                        return meal;
+                    }
+                    
+                    if(meal.name.toLowerCase().includes(action.payload.toLowerCase())) {
+                        meal.visible = '';
+                        
+                        return meal;
+                    } else {
+                        meal.visible = 'hidden';
+                        return meal;
+                    }
+                }),
             }
         default:
             return state;

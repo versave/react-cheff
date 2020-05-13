@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Search from './Search';
 import Checkbox from './Checkbox';
-import { toggleItemMenu } from '../redux/actions/userActions';
+import { toggleItemMenu, setMeal } from '../redux/actions/userActions';
 import { filterTags } from '../redux/actions/mealActions';
 
 class Menu extends Component {
@@ -24,6 +24,15 @@ class Menu extends Component {
     filterMeals = (name, checked) => {
         this.props.filterTags(name, checked);
     }
+    
+    setRandomMeal = (e) => {
+        e.preventDefault();
+
+        const mealsLength = this.props.meals.length;
+        const meal = this.props.meals[Math.floor(Math.random() * Math.floor(mealsLength))];
+
+        this.props.setMeal(meal._id);
+    }
 
     render() {
         return (
@@ -44,12 +53,14 @@ class Menu extends Component {
                                     .map((filter, index) => {
                                         return(
                                             <li key={index}>
-                                                <Checkbox index={index} name={filter} onChange={this.filterMeals} />
+                                                <Checkbox index={index} name={filter} activeFilters={this.props.activeFilters} onChange={this.filterMeals} />
                                             </li>
                                         );
                                     })
                             }
                         </ul>
+
+                        <button className="btn" onClick={this.setRandomMeal}>Get a random meal</button>
                     </div>
                 </div>
             </div>
@@ -59,7 +70,9 @@ class Menu extends Component {
 
 const mapStateToProps = (state) => ({
     filters: state.meals.filters,
-    user: state.user
+    activeFilters: state.meals.activeFilters,
+    user: state.user,
+    meals: state.meals.meals
 });
 
-export default connect(mapStateToProps, { toggleItemMenu, filterTags })(Menu);
+export default connect(mapStateToProps, { toggleItemMenu, filterTags, setMeal })(Menu);

@@ -4,12 +4,15 @@ import { setMeal } from './../redux/actions/userActions';
 import { editMeal, deleteMeal } from './../redux/actions/mealActions';
 import ErrorAlert from './ErrorAlert';
 
+import { placeholderImage } from './Wrapper';
+
 class MealMenu extends Component {
     state = {
         editMode: false,
-        id: this.props.user.openedMeal.id,
+        id: this.props.user.openedMeal._id,
         name: this.props.user.openedMeal.name,
-        image: this.props.user.openedMeal.image,
+        image: null,
+        hasImage: this.props.user.openedMeal.hasImage,
         image64: this.props.user.openedMeal.image64,
         ingredients: [...this.props.user.openedMeal.ingredients, ''],
         tags: [...this.props.user.openedMeal.tags, ''],
@@ -48,8 +51,9 @@ class MealMenu extends Component {
         this.setState({ [e.target.name]: e.target.value });
 
         if(e.target.type === 'file' && e.target.files[0] !== undefined) {
-            this.setState({ image: e.target.files[0] });
+            this.setState({image: e.target.files[0]});
             this.setState({imageUpdated: true});
+            this.setState({hasImage: true});
 
             const reader = new FileReader();
 
@@ -133,6 +137,7 @@ class MealMenu extends Component {
             id: this.state.id,
             name: this.state.name,
             image: this.state.image,
+            hasImage: this.state.hasImage,
             ingredients,
             tags,
             recipe: this.state.recipe
@@ -143,6 +148,7 @@ class MealMenu extends Component {
 
             formData.append('name', meal.name);
             formData.append('meal', meal.image);
+            formData.append('hasImage', meal.hasImage);
             formData.append('ingredients', meal.ingredients);
             formData.append('tags', meal.tags);
             formData.append('recipe', meal.recipe);
@@ -202,7 +208,7 @@ class MealMenu extends Component {
         const {
             id,
             name,
-            image,
+            hasImage,
             image64,
             ingredients,
             tags,
@@ -210,9 +216,9 @@ class MealMenu extends Component {
         } = this.state;
         let imageUrl = null;
 
-        if(image && image64) {
+        if(hasImage && image64) {
             imageUrl = `data:image/jpg;base64,${this.props.user.openedMeal.image64}`;
-        } else if(image) {
+        } else if(hasImage) {
             imageUrl = `/api/meals/${id}/image`;
         }
 
@@ -286,7 +292,7 @@ class MealMenu extends Component {
                             <div className="form-meal__image">
                                 {showFileUpload}
 
-                                <figure style={{backgroundImage: `url(${imageUrl ? imageUrl : 'splash_nilfgaard.png'})`}}></figure>
+                                <figure style={{backgroundImage: `url(${imageUrl ? imageUrl : placeholderImage})`}}></figure>
                             </div>
                             
                             <div className="form-meal__content">
