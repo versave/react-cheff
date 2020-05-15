@@ -6,10 +6,6 @@ import Tag from './Tag';
 import { placeholderImage } from './Wrapper';
 
 class Meal extends Component {
-    constructor() {
-        super();
-    }
-
     openMeal = () => {
         const mealId = this.props.id;
         this.props.setMeal(mealId);

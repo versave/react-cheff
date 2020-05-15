@@ -78,7 +78,7 @@ class AddMeal extends Component {
         return new Promise((resolve, reject) => {
             Object.keys(obj)
                 .forEach(key => {
-                    if(obj[key] === '' || Array.isArray(obj[key]) && !obj[key].length) {
+                    if((obj[key] === '' || obj[key] === undefined) || Array.isArray(obj[key]) && !obj[key].length) {
                         reject('Please fill all text fields');
                     } else if(key === 'image' && obj[key] !== null) {
                         if(!obj[key].type.match(/\/(jpg|jpeg|png)$/)) {

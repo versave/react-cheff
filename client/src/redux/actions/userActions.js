@@ -8,7 +8,6 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
-    CLEAR_ERRORS,
     SET_MEAL
 } from './types';
 import { returnErrors, clearErrors } from './errorActions';

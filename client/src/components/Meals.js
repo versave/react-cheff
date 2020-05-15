@@ -15,7 +15,7 @@ class Meals extends Component {
     }
 
     componentDidUpdate() {
-        if(this.state.filters && !this.props.meals.filters.length) {
+        if(this.state.filters && !this.props.meals.filters.length && this.props.meals.meals.length) {
             this.props.buildFilters(this.state.filters);
         }
     }
@@ -23,6 +23,10 @@ class Meals extends Component {
     render() {
         const { meals } = this.props.meals;
         const filters = this.props.meals.activeFilters;
+
+        if(!meals.length && this.props.meals.loaded) {
+            return (<div style={{padding: '40px', fontSize: '30px', textAlign: 'center'}}>No meals added</div>);
+        }
 
         return (
             <div className="meals">

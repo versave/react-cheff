@@ -9,7 +9,7 @@ import { placeholderImage } from './Wrapper';
 class MealMenu extends Component {
     state = {
         editMode: false,
-        id: this.props.user.openedMeal._id,
+        _id: this.props.user.openedMeal._id,
         name: this.props.user.openedMeal.name,
         image: null,
         hasImage: this.props.user.openedMeal.hasImage,
@@ -28,8 +28,6 @@ class MealMenu extends Component {
             this.setState({editMode: !this.state.editMode})
         }
     }
-
-    closeMeal = () => this.props.setMeal(null);
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
@@ -134,7 +132,7 @@ class MealMenu extends Component {
         const ingredients = this.state.ingredients.filter(el => el === '' ? false : true);
         const tags = this.state.tags.filter(el => el === '' ? false : true);
         const meal = {
-            id: this.state.id,
+            id: this.state._id,
             name: this.state.name,
             image: this.state.image,
             hasImage: this.state.hasImage,
@@ -183,7 +181,7 @@ class MealMenu extends Component {
         return new Promise((resolve, reject) => {
             Object.keys(obj)
                 .forEach(key => {
-                    if(obj[key] === '' || Array.isArray(obj[key]) && !obj[key].length) {
+                    if((obj[key] === '' || obj[key] === undefined) || Array.isArray(obj[key]) && !obj[key].length) {
                         reject("Please don't leave empty main fields");
                     } else if(key === 'image' && obj[key] !== null && this.state.imageUpdated) {
                         if(!obj[key].type.match(/\/(jpg|jpeg|png)$/)) {
@@ -200,31 +198,26 @@ class MealMenu extends Component {
 
     deleteMeal = (e) => {
         e.preventDefault();
-
-        this.props.deleteMeal(this.props.user.openedMeal.id);
+        this.props.deleteMeal(this.props.user.openedMeal._id);
     }
 
+    getImage = (obj) => {
+        if(obj.imageUpdated) {
+            return obj.uploadBg;
+        } else if(obj.hasImage && obj.image64) {
+            return `data:image/jpg;base64,${obj.image64}`;
+        } else if(obj.hasImage) {
+            return `/api/meals/${obj._id || obj.id}/image`;
+        } else {
+            return null;
+        }
+    }
+
+    closeMeal = () => this.props.setMeal(null);
+
     render() {
-        const {
-            id,
-            name,
-            hasImage,
-            image64,
-            ingredients,
-            tags,
-            recipe
-        } = this.state;
-        let imageUrl = null;
-
-        if(hasImage && image64) {
-            imageUrl = `data:image/jpg;base64,${this.props.user.openedMeal.image64}`;
-        } else if(hasImage) {
-            imageUrl = `/api/meals/${id}/image`;
-        }
-
-        if(this.state.imageUpdated) {
-            imageUrl = this.state.uploadBg;
-        }
+        const { name, ingredients, tags, recipe } = this.state;
+        let imageUrl = this.getImage(this.state);
 
         const showFileUpload = this.state.editMode ? (<div className="file">
             <input type="file" id="file" name="file" onChange={this.onChange} />

@@ -66,6 +66,7 @@ export const deleteMeal = (id) => (dispatch, getState) => {
                 payload: [id, res.data.tags]
             })
 
+            dispatch(resetActiveFilters());
             dispatch(setMeal(null));
         })
         .catch(err => {
