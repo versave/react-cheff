@@ -8,6 +8,7 @@ import Login from './Login';
 import AddMeal from './AddMeal';
 import MealMenu from './MealMenu';
 import { loadUser } from './../redux/actions/userActions';
+import Loader from './Loader';
 
 export const placeholderImage = './placeholder.png';
 
@@ -17,7 +18,9 @@ class Wrapper extends Component {
     }
 
     render() {
-        const { itemMenu, loginMenu, openedMeal } = this.props.user;
+        const { itemMenu, loginMenu, openedMeal, isLoading } = this.props.user;
+        const { loaded } = this.props.meal;
+        const showLoader = !loaded || isLoading;
 
         return(
             <div className="wrapper">
@@ -26,7 +29,9 @@ class Wrapper extends Component {
                 <main>
                     <Meals />            
                 </main>
-
+                
+                {showLoader ? <Loader /> : null}
+                
                 {loginMenu ? <Login /> : null}
                 {itemMenu ? <AddMeal /> : null}
                 {openedMeal ? <MealMenu /> : null}
@@ -38,7 +43,8 @@ class Wrapper extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    user: state.user
+    user: state.user,
+    meal: state.meals
 });
 
 export default connect(mapStateToProps, { loadUser })(Wrapper);

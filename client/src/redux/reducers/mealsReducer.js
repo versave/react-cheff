@@ -1,4 +1,4 @@
-import { GET_MEALS, ADD_MEAL, EDIT_MEAL, DELETE_MEAL, SET_ACTIVE_FILTERS, RESET_ACTIVE_FILTERS, BUILD_FILTERS, SEARCH_MEALS } from '../actions/types';
+import { GET_MEALS, ADD_MEAL, EDIT_MEAL, DELETE_MEAL, SET_ACTIVE_FILTERS, RESET_ACTIVE_FILTERS, BUILD_FILTERS, SEARCH_MEALS, SET_MEALS_LOADING } from '../actions/types';
 
 const initialState = {
     meals: [],
@@ -33,7 +33,8 @@ export default function(state = initialState, action) {
                     }
 
                     return meal;
-                })
+                }),
+                loaded: true
             }
         case DELETE_MEAL:
             const [deletedId, tags] = action.payload;
@@ -47,7 +48,8 @@ export default function(state = initialState, action) {
                     } else {
                         return true;
                     }
-                })
+                }),
+                loaded: true
             }
         case BUILD_FILTERS:
             let filtersArr = [];
@@ -94,6 +96,11 @@ export default function(state = initialState, action) {
                         return meal;
                     }
                 }),
+            }
+        case SET_MEALS_LOADING:
+            return {
+                ...state,
+                loaded: action.payload
             }
         default:
             return state;

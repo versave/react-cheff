@@ -1,0 +1,30 @@
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 25;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba($color: $black, $alpha: .8);
+
+    i {
+        position: relative;
+        font-size: 50px;
+        color: $red;
+
+        i {
+            position: absolute;
+            top: auto;
+            left: 0;
+            bottom: 100%;
+            transform: rotate(180deg);
+            font-size: 44px;
+            color: #fff;
+            margin: 0px 0 -26px 15px;
+        }
+    }
+}

@@ -6,7 +6,8 @@ import { GET_MEALS,
     SET_ACTIVE_FILTERS,
     RESET_ACTIVE_FILTERS,
     BUILD_FILTERS,
-    SEARCH_MEALS
+    SEARCH_MEALS,
+    SET_MEALS_LOADING
 } from './types';
 import { tokenConfig, toggleItemMenu, setMeal } from './userActions';
 import { returnErrors, clearErrors } from './errorActions';
@@ -23,6 +24,8 @@ export const loadMeals = () => dispatch => {
 };
 
 export const addMeal = (meal) => (dispatch, getState) => {
+    dispatch(setMealsLoaded(false));
+
     axios.post('/api/meals', meal, tokenConfig(getState))
         .then(res => {
             dispatch(clearErrors());
@@ -38,10 +41,13 @@ export const addMeal = (meal) => (dispatch, getState) => {
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch(setMealsLoaded(true));
         });
 };
 
 export const editMeal = (id, edits) => (dispatch, getState) => {
+    dispatch(setMealsLoaded(false));
+
     axios.patch(`/api/meals/${id}`, edits, tokenConfig(getState))
         .then(res => {
             dispatch({
@@ -55,10 +61,13 @@ export const editMeal = (id, edits) => (dispatch, getState) => {
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch(setMealsLoaded(true));
         });
 };
 
 export const deleteMeal = (id) => (dispatch, getState) => {
+    dispatch(setMealsLoaded(false));
+    
     axios.delete(`/api/meals/${id}`, tokenConfig(getState))
         .then(res => {
             dispatch({
@@ -71,6 +80,7 @@ export const deleteMeal = (id) => (dispatch, getState) => {
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch(setMealsLoaded(true));
         });
 };
 
@@ -78,6 +88,13 @@ export const filterTags = (filter, checked) => dispatch => {
     dispatch({
         type: SET_ACTIVE_FILTERS,
         payload: {filter, checked}
+    })
+};
+
+export const setMealsLoaded = (loaded) => dispatch => {
+    return dispatch({
+        type: SET_MEALS_LOADING,
+        payload: loaded
     })
 };
 

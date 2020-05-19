@@ -30,7 +30,7 @@ export const toggleLoginMenu = (toggle) => dispatch => {
 // Check token & load user
 export const loadUser = () => (dispatch, getState) => {
     // User loading
-    dispatch({type: USER_LOADING});
+    dispatch(setUserLoading(true));
 
     axios.get('/api/users/me', tokenConfig(getState))
         .then(res => dispatch({
@@ -38,6 +38,7 @@ export const loadUser = () => (dispatch, getState) => {
             payload: res.data
         }))
         .catch(err => {
+            dispatch(setUserLoading(false));
             dispatch(returnErrors(err.response.data, err.response.status));
             dispatch({
                 type: AUTH_ERROR
@@ -47,6 +48,8 @@ export const loadUser = () => (dispatch, getState) => {
 
 // Login user
 export const login = ({ email, password }) => dispatch => {
+    dispatch(setUserLoading(true));
+
     // Headers
     const config = {
         headers: {
@@ -67,6 +70,7 @@ export const login = ({ email, password }) => dispatch => {
             })
         })
         .catch(err => {
+            dispatch(setUserLoading(false));
             dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
             dispatch({
                 type: LOGIN_FAIL
@@ -109,3 +113,10 @@ export const tokenConfig = (getState) => {
 
     return config;
 };
+
+export const setUserLoading = (loading) => dispatch => {
+    return dispatch({
+        type: USER_LOADING,
+        payload: loading
+    })
+}

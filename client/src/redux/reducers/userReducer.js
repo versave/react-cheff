@@ -39,7 +39,7 @@ export default function(state = initialState, action) {
         case USER_LOADING:
             return {
                 ...state,
-                isLoading: true
+                isLoading: action.payload
             }
         case USER_LOADED:
             return {
