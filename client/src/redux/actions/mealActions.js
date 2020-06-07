@@ -12,8 +12,8 @@ import { GET_MEALS,
 import { tokenConfig, toggleItemMenu, setMeal } from './userActions';
 import { returnErrors, clearErrors } from './errorActions';
 
-export const loadMeals = () => dispatch => {
-    axios.get('/api/meals')
+export const loadMeals = () => (dispatch, getState) => {
+    axios.get('/api/meals', tokenConfig(getState))
         .then(res => dispatch({
             type: GET_MEALS,
             payload: res.data

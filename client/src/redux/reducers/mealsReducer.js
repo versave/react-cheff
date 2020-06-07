@@ -1,4 +1,15 @@
-import { GET_MEALS, ADD_MEAL, EDIT_MEAL, DELETE_MEAL, SET_ACTIVE_FILTERS, RESET_ACTIVE_FILTERS, BUILD_FILTERS, SEARCH_MEALS, SET_MEALS_LOADING } from '../actions/types';
+import {
+    GET_MEALS,
+    ADD_MEAL,
+    EDIT_MEAL,
+    DELETE_MEAL,
+    SET_ACTIVE_FILTERS,
+    RESET_ACTIVE_FILTERS,
+    BUILD_FILTERS,
+    SEARCH_MEALS,
+    SET_MEALS_LOADING,
+    EMPTY_MEALS
+} from '../actions/types';
 
 const initialState = {
     meals: [],
@@ -101,6 +112,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loaded: action.payload
+            }
+        case EMPTY_MEALS:
+            return {
+                ...state,
+                meals: []
             }
         default:
             return state;

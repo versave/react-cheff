@@ -35,7 +35,7 @@ class Meals extends Component {
                         meals.map(meal => {
                             const boolsArr = [];
                             const tags = meal.tags;
-                            let className = 'col col--1of4';
+                            let className = 'col col--1of5';
 
                             tags.forEach(tag => {
                                 if(filters.indexOf(tag) !== -1 && filters.length) {
@@ -46,9 +46,9 @@ class Meals extends Component {
                             });
                     
                             if(boolsArr.indexOf(true) !== -1) {
-                                className = 'col col--1of4';
+                                className = 'col col--1of5';
                             } else if(boolsArr.indexOf(true) === -1 && filters.length) {
-                                className = 'col col--1of4 hidden';
+                                className = 'col col--1of5 hidden';
                             }
 
                             if(meal.visible === 'hidden') className += ' hidden';

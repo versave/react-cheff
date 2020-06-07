@@ -25,7 +25,12 @@ const mealSchema = new mongoose.Schema({
     tags: {
         type: Array,
         required: true
-    }
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
 }, {
     timestamps: true
 });

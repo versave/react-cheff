@@ -33,6 +33,7 @@ router.post('/api/meals', auth, upload.single('meal'), async(req, res) => {
     
     const meal = new Meal({
         ...req.body,
+        owner: req.user._id,
         image: buffer,
         hasImage: buffer ? true : false
     });
@@ -48,10 +49,10 @@ router.post('/api/meals', auth, upload.single('meal'), async(req, res) => {
 });
 
 // @route GET /api/meals
-// @desc Get all meals
-// @access Public
-router.get('/api/meals', (req, res) => {
-    Meal.find()
+// @desc Get all user meals
+// @access Private
+router.get('/api/meals', auth, (req, res) => {
+    Meal.find({owner: req.user._id})
         .sort({ createdAt: -1 })
         .then(meals => res.send(meals));
 });

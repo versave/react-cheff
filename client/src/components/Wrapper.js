@@ -5,6 +5,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Meals from './Meals';
 import Login from './Login';
+import Signup from './Signup';
 import AddMeal from './AddMeal';
 import MealMenu from './MealMenu';
 import { loadUser } from './../redux/actions/userActions';
@@ -18,20 +19,21 @@ class Wrapper extends Component {
     }
 
     render() {
-        const { itemMenu, loginMenu, openedMeal, isLoading } = this.props.user;
+        const { itemMenu, signupMenu, loginMenu, openedMeal, isLoading, isAuthenticated } = this.props.user;
         const { loaded } = this.props.meal;
-        const showLoader = !loaded || isLoading;
+        const showLoader = !loaded && isAuthenticated || isLoading && isAuthenticated;
 
         return(
             <div className="wrapper">
                 <Header />
 
                 <main>
-                    <Meals />            
+                    { isAuthenticated ? <Meals /> : <div style={{padding: '40px', fontSize: '30px', textAlign: 'center'}}>Please Signup or Login</div> }
                 </main>
                 
                 {showLoader ? <Loader /> : null}
                 
+                {signupMenu ? <Signup /> : null}
                 {loginMenu ? <Login /> : null}
                 {itemMenu ? <AddMeal /> : null}
                 {openedMeal ? <MealMenu /> : null}

@@ -1,13 +1,24 @@
 .header {
     position: relative;
-    padding: 20px 200px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 30px 80px;
     border-bottom-left-radius: 60px;
     margin-bottom: 40px;
     background: $red;
     text-align: center;
 
     h1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         font-size: 40px;
+    }
+
+    .btn {
+        margin-right: 10px;
     }
 
     &__btn {
@@ -28,9 +39,6 @@
     }
 
     &__login {
-        position: absolute;
-        top: 50%;
-        left: 50px;
-        transform: translateY(-50%);
+        
     }
 }

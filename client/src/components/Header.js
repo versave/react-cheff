@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import Menu from './Menu';
-import { toggleLoginMenu, logout } from '../redux/actions/userActions';
+import { toggleSignupMenu, toggleLoginMenu, logout } from '../redux/actions/userActions';
 
 function Header(props) {
     function openMenu(e) {
@@ -11,6 +11,12 @@ function Header(props) {
             .querySelector('.menu')
             .classList
             .toggle('open');
+    }
+
+    function openSignup(e) {
+        e.preventDefault();
+
+        props.toggleSignupMenu(true);
     }
 
     function openLogin(e) {
@@ -26,17 +32,23 @@ function Header(props) {
     }
 
     const userAuthenticated = props.user.isAuthenticated;
+    const buttons = (
+        <Fragment>
+            <button className="btn header__login" onClick={openLogin}>Login</button>
+            <button className="btn header__login" onClick={openSignup}>Signup</button>
+        </Fragment>
+    );
 
     return(
         <Fragment>
             <header className="header">
+                {userAuthenticated ? <button className="btn header__login" onClick={logout}>Logout</button> : buttons}
+
                 <h1>Cheff Book</h1>
 
                 <button className="header__btn" onClick={openMenu}>
                     <i className="fa fa-navicon"></i>
                 </button>
-
-                {userAuthenticated ? <button className="btn header__login" onClick={logout}>Logout</button> : <button className="btn header__login" onClick={openLogin}>Login</button>}
             </header>
 
             <Menu />
@@ -48,4 +60,4 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { toggleLoginMenu, logout })(Header);
+export default connect(mapStateToProps, { toggleSignupMenu, toggleLoginMenu, logout })(Header);

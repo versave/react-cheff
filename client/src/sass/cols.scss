@@ -17,6 +17,11 @@
             max-width: 25%;
         }
 
+        &--1of5 {
+            flex: 0 1 20%;
+            max-width: 20%;
+        }
+
         @include breakpoint-mobile-portrait {
             flex: 0 1 100%;
             max-width: 100%;
