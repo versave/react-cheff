@@ -21,7 +21,7 @@ class Wrapper extends Component {
     render() {
         const { itemMenu, signupMenu, loginMenu, openedMeal, isLoading, isAuthenticated } = this.props.user;
         const { loaded } = this.props.meal;
-        const showLoader = !loaded && isAuthenticated || isLoading && isAuthenticated;
+        const showLoader = !loaded && isAuthenticated || isLoading && !isAuthenticated;
 
         return(
             <div className="wrapper">

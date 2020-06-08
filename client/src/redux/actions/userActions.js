@@ -49,11 +49,10 @@ export const loadUser = () => (dispatch, getState) => {
             payload: res.data
         }))
         .catch(err => {
+            dispatch(toggleLoginMenu(true));
             dispatch(setUserLoading(false));
             dispatch(returnErrors(err.response.data, err.response.status));
-            dispatch({
-                type: AUTH_ERROR
-            })
+            dispatch({ type: AUTH_ERROR })
         });
 };
 

@@ -38,6 +38,11 @@ function Header(props) {
             <button className="btn header__login" onClick={openSignup}>Signup</button>
         </Fragment>
     );
+    const menuButton = (
+        <button className="header__btn" onClick={openMenu}>
+            <i className="fa fa-navicon"></i>
+        </button>
+    );
 
     return(
         <Fragment>
@@ -46,12 +51,10 @@ function Header(props) {
 
                 <h1>Cheff Book</h1>
 
-                <button className="header__btn" onClick={openMenu}>
-                    <i className="fa fa-navicon"></i>
-                </button>
+                {userAuthenticated ? menuButton : null}
             </header>
 
-            <Menu />
+            {userAuthenticated ? <Menu /> : null}
         </Fragment>
     );
 }

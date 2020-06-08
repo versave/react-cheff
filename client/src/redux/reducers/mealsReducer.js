@@ -116,7 +116,9 @@ export default function(state = initialState, action) {
         case EMPTY_MEALS:
             return {
                 ...state,
-                meals: []
+                meals: [],
+                filters: [],
+                activeFilters: []
             }
         default:
             return state;
