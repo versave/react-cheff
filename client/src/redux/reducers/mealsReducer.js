@@ -15,6 +15,7 @@ const initialState = {
     meals: [],
     filters: [],
     activeFilters: [],
+    loaded: false,
     loading: false
 };
 
