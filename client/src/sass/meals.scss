@@ -1,4 +1,42 @@
 .meals {
     padding: 20px 40px;
     margin-bottom: 40px;
+
+    @include breakpoint-mobile {
+        padding: 20px 10px;
+    }
+
+    .cols {
+        margin-left: -15px;
+        margin-right: -15px;
+
+        @include breakpoint-mobile-portrait {
+            margin-top: -20px;
+        }
+    }
+
+    .col {
+        @include breakpoint-large-desktop {
+            flex: 0 1 25%;
+            max-width: 25%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        @include breakpoint-small-desktop {
+            flex: 0 1 33.33%;
+            max-width: 33.33%;
+        }
+
+        @include breakpoint-tablet-portrait {
+            flex: 0 1 50%;
+            max-width: 50%;
+        }
+
+        @include breakpoint-mobile-portrait {
+            flex: 0 1 100%;
+            max-width: 100%;
+            padding-top: 20px;
+        }
+    }
 }

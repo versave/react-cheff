@@ -13,18 +13,23 @@ import { tokenConfig, toggleItemMenu, setMeal } from './userActions';
 import { returnErrors, clearErrors } from './errorActions';
 
 export const loadMeals = () => (dispatch, getState) => {
+    dispatch(setMealsLoading(true));
+
     axios.get('/api/meals', tokenConfig(getState))
-        .then(res => dispatch({
-            type: GET_MEALS,
-            payload: res.data
-        }))
+        .then(res => {
+            dispatch({
+                type: GET_MEALS,
+                payload: res.data
+            })
+        })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch(setMealsLoading(false));
         })
 };
 
 export const addMeal = (meal) => (dispatch, getState) => {
-    dispatch(setMealsLoaded(false));
+    dispatch(setMealsLoading(true));
 
     axios.post('/api/meals', meal, tokenConfig(getState))
         .then(res => {
@@ -41,12 +46,12 @@ export const addMeal = (meal) => (dispatch, getState) => {
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status));
-            dispatch(setMealsLoaded(true));
+            dispatch(setMealsLoading(false));
         });
 };
 
 export const editMeal = (id, edits) => (dispatch, getState) => {
-    dispatch(setMealsLoaded(false));
+    dispatch(setMealsLoading(true));
 
     axios.patch(`/api/meals/${id}`, edits, tokenConfig(getState))
         .then(res => {
@@ -61,12 +66,12 @@ export const editMeal = (id, edits) => (dispatch, getState) => {
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status));
-            dispatch(setMealsLoaded(true));
+            dispatch(setMealsLoading(false));
         });
 };
 
 export const deleteMeal = (id) => (dispatch, getState) => {
-    dispatch(setMealsLoaded(false));
+    dispatch(setMealsLoading(true));
     
     axios.delete(`/api/meals/${id}`, tokenConfig(getState))
         .then(res => {
@@ -80,7 +85,7 @@ export const deleteMeal = (id) => (dispatch, getState) => {
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status));
-            dispatch(setMealsLoaded(true));
+            dispatch(setMealsLoading(false));
         });
 };
 
@@ -91,10 +96,10 @@ export const filterTags = (filter, checked) => dispatch => {
     })
 };
 
-export const setMealsLoaded = (loaded) => dispatch => {
+export const setMealsLoading = (loading) => dispatch => {
     return dispatch({
         type: SET_MEALS_LOADING,
-        payload: loaded
+        payload: loading
     })
 };
 

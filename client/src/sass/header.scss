@@ -1,7 +1,7 @@
 .header {
     position: relative;
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
     padding: 30px 80px;
     border-bottom-left-radius: 60px;
@@ -9,16 +9,70 @@
     background: $red;
     text-align: center;
 
+    @include breakpoint-small-desktop {
+        padding-left: 40px;
+    }
+    
+    @include breakpoint-tablet-portrait {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    @include breakpoint-mobile-portrait {
+        min-height: 100px;
+        padding: 12px 10px 15px;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-direction: column;
+
+        &--logged {
+            padding-top: 40px;
+            padding-bottom: 20px;
+
+            .btn.header__logout {
+                margin-right: 0;
+                border-bottom-right-radius: 30px;
+            }
+        }
+    }
+
     h1 {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 40px;
+
+        @include breakpoint-mobile-portrait {
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            order: -1;
+            margin-top: 8px;
+            margin-bottom: 0;
+            font-size: 30px;
+        }
     }
 
     .btn {
-        margin-right: 10px;
+        margin-left: 10px;
+
+        @include breakpoint-mobile {
+            padding: 8px 25px;
+            margin-left: 5px;
+            font-size: 12px;
+        }
+
+        @include breakpoint-mobile-portrait {
+            margin-right: -13px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+
+            &:last-of-type {
+                margin-top: 5px;
+                margin-left: 5px;
+            }
+        }
     }
 
     &__btn {
@@ -36,9 +90,25 @@
             background: none;
             color: #fff;
         }
+
+        @include breakpoint-mobile-portrait {
+            top: 44px;
+            right: 15px;
+            transform: none;
+            font-size: 30px;
+        }
     }
 
-    &__login {
-        
+    &__logout {
+        margin-right: auto;
+
+        @include breakpoint-mobile-portrait {
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            border-top: 0;
+            border-right: 0;
+            border-top-right-radius: 0;
+        }
     }
 }

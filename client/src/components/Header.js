@@ -43,11 +43,12 @@ function Header(props) {
             <i className="fa fa-navicon"></i>
         </button>
     );
+    const headerClass = userAuthenticated ? 'header header--logged' : 'header';
 
     return(
         <Fragment>
-            <header className="header">
-                {userAuthenticated ? <button className="btn header__login" onClick={logout}>Logout</button> : buttons}
+            <header className={headerClass}>
+                {userAuthenticated ? <button className="btn header__logout" onClick={logout}>Logout</button> : buttons}
 
                 <h1>Cheff Book</h1>
 

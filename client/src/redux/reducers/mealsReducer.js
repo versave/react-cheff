@@ -15,7 +15,7 @@ const initialState = {
     meals: [],
     filters: [],
     activeFilters: [],
-    loaded: false
+    loading: false
 };
 
 export default function(state = initialState, action) {
@@ -24,13 +24,13 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 meals: [action.payload, ...state.meals],
-                loaded: true
+                loading: false
             }
         case GET_MEALS: 
             return {
                 ...state,
                 meals: action.payload,
-                loaded: true
+                loading: false
             }
         case EDIT_MEAL:
             const [id, mealObject] = action.payload;
@@ -45,7 +45,7 @@ export default function(state = initialState, action) {
 
                     return meal;
                 }),
-                loaded: true
+                loading: false
             }
         case DELETE_MEAL:
             const [deletedId, tags] = action.payload;
@@ -60,18 +60,28 @@ export default function(state = initialState, action) {
                         return true;
                     }
                 }),
-                loaded: true
+                loading: false
             }
         case BUILD_FILTERS:
             let filtersArr = [];
+            let tagFilters = [];
 
             state.meals.forEach(meal => {
                 filtersArr = filtersArr.concat(meal.tags);
             });
 
+            const filteredTags = filtersArr.filter(tag => {
+                if(tagFilters.includes(tag)) {
+                    return false;
+                } else {
+                    tagFilters.push(tag);
+                    return true;
+                }
+            })
+
             return {
                 ...state,
-                filters: filtersArr
+                filters: filteredTags
             }
         case SET_ACTIVE_FILTERS:
             return {
@@ -111,7 +121,7 @@ export default function(state = initialState, action) {
         case SET_MEALS_LOADING:
             return {
                 ...state,
-                loaded: action.payload
+                loading: action.payload
             }
         case EMPTY_MEALS:
             return {

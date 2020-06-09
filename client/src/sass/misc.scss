@@ -10,3 +10,11 @@
 	0% { transform: rotate(0); }
 	100% { transform: rotate(180deg); }
 }
+
+.visible-xxs {
+	display: none;
+
+	@include breakpoint-mobile-portrait {
+		display: inline-block;
+	}
+}

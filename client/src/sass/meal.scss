@@ -10,6 +10,11 @@
     background-position: 50% 50%;
     cursor: pointer;
 
+    @include breakpoint-mobile-portrait {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
     &.hidden {
         display: none;
     }

@@ -11,6 +11,7 @@
     bottom: 0;
     z-index: 20;
     overflow: auto;
+    padding: 10px;
     background: rgba($color: #000000, $alpha: .8);
     animation: fade-in forwards .5s;
 
@@ -22,6 +23,10 @@
         margin: 100px auto;
         background: $red;
 
+        @include breakpoint-mobile-portrait {
+            padding: 20px 10px;
+        }
+
         &--wide {
             max-width: 1200px;
         }
@@ -31,9 +36,18 @@
         position: absolute;
         top: 10px;
         right: 20px;
+        z-index: 5;
         border: 0;
         padding: 0;
         font-size: 40px;
+
+        @include breakpoint-mobile-portrait {
+            font-size: 30px;
+            
+            i {
+                text-shadow: 0 0 4px $red;
+            }
+        }
 
         &:hover {
             background: none;
@@ -55,6 +69,11 @@
         .popup__close {
             top: 20px;
             right: 48px;
+
+            @include breakpoint-mobile-portrait {
+                top: 10px;
+                right: 24px;
+            }
         }
     }
 }

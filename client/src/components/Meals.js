@@ -25,7 +25,7 @@ class Meals extends Component {
         const filters = this.props.meals.activeFilters;
 
         if(!meals.length && this.props.meals.loaded) {
-            return (<div style={{padding: '40px', fontSize: '30px', textAlign: 'center'}}>No meals added</div>);
+            return (<div className="notice">No meals added</div>);
         }
 
         return (

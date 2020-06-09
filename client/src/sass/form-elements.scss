@@ -14,6 +14,10 @@
         font-size: 14px;
     }
 
+    @include breakpoint-mobile-portrait {
+        height: 35px;
+    }
+
     &::placeholder {
         opacity: 0.8;
     }
@@ -22,6 +26,10 @@
         height: 200px;
         padding: 20px;
         resize: none;
+
+        @include breakpoint-mobile-portrait {
+            height: 150px;
+        }
     }
 
     &--transparent {
@@ -131,6 +139,11 @@
         border-radius: 30px;
         background: rgba($color: $red, $alpha: .8);
         text-align: center;
+
+        @include breakpoint-tablet-portrait {
+            min-width: 120px;
+            font-size: 15px;
+        }
 
         i {
             display: block;

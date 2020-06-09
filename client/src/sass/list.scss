@@ -2,6 +2,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
+    @include breakpoint-mobile-portrait {
+        display: block;
+    }
     
     li {
         flex: 0 1 45%;

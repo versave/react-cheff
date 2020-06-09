@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import 'simplebar'; 
+import 'simplebar/dist/simplebar.css';
+
 import Header from './Header';
 import Footer from './Footer';
 import Meals from './Meals';
@@ -20,15 +23,15 @@ class Wrapper extends Component {
 
     render() {
         const { itemMenu, signupMenu, loginMenu, openedMeal, isLoading, isAuthenticated } = this.props.user;
-        const { loaded } = this.props.meal;
-        const showLoader = !loaded && isAuthenticated || isLoading && !isAuthenticated;
+        const { loading } = this.props.meal;
+        const showLoader = loading || isLoading && !isAuthenticated;
 
         return(
             <div className="wrapper">
                 <Header />
 
                 <main>
-                    { isAuthenticated ? <Meals /> : <div style={{padding: '40px', fontSize: '30px', textAlign: 'center'}}>Please Signup or Login</div> }
+                    { isAuthenticated ? <Meals /> : <div className="notice">Please Signup or Login to get the full experience</div> }
                 </main>
                 
                 {showLoader ? <Loader /> : null}

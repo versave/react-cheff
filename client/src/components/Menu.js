@@ -34,9 +34,22 @@ class Menu extends Component {
         this.props.setMeal(meal._id);
     }
 
+    openMenu = (e) => {
+        e.preventDefault();
+
+        document
+            .querySelector('.menu')
+            .classList
+            .toggle('open');
+    }
+
     render() {
         return (
             <div className="menu">
+                <button className="menu__close visible-xxs" onClick={this.openMenu}>
+                    <i className="fa fa-close"></i>
+                </button>
+
                 <div className="menu__inner">
                     {this.props.user.isAuthenticated ? <button className="btn btn--white" onClick={this.openItemMenu}>Add meal</button> : null}
 
@@ -45,23 +58,25 @@ class Menu extends Component {
                     <div className="menu__filters">
                         <h2>Filters:</h2>
 
-                        <ul className="checkboxes">
-                            {
-                                this
-                                    .state
-                                    .filters
-                                    .map((filter, index) => {
-                                        return(
-                                            <li key={index}>
-                                                <Checkbox index={index} name={filter} activeFilters={this.props.activeFilters} onChange={this.filterMeals} />
-                                            </li>
-                                        );
-                                    })
-                            }
-                        </ul>
-
-                        <button className="btn" onClick={this.setRandomMeal}>Get a random meal</button>
+                        <div className="menu__checkboxes" data-simplebar>
+                            <ul className="checkboxes">
+                                {
+                                    this
+                                        .state
+                                        .filters
+                                        .map((filter, index) => {
+                                            return(
+                                                <li key={index}>
+                                                    <Checkbox index={index} name={filter} activeFilters={this.props.activeFilters} onChange={this.filterMeals} />
+                                                </li>
+                                            );
+                                        })
+                                }
+                            </ul>
+                        </div>
                     </div>
+                    
+                    <button className="btn" onClick={this.setRandomMeal}>Get a random meal</button>
                 </div>
             </div>
         );

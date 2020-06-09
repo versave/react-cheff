@@ -4,6 +4,8 @@ import { toggleItemMenu } from '../redux/actions/userActions';
 import { addMeal } from '../redux/actions/mealActions';
 import ErrorAlert from './ErrorAlert';
 
+import { placeholderImage } from './Wrapper';
+
 class AddMeal extends Component {
     state = {
         image: null,
@@ -150,7 +152,7 @@ class AddMeal extends Component {
                                         </label>
                                     </div>
 
-                                    <figure style={{backgroundImage: `url(${this.state.uploadBg !== '' ? this.state.uploadBg : 'splash_nilfgaard.png'})`}}></figure>
+                                    <figure style={{backgroundImage: `url(${this.state.uploadBg !== '' ? this.state.uploadBg : placeholderImage})`}}></figure>
                                 </div>
                             </div>
 

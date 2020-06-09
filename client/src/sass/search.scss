@@ -3,12 +3,18 @@
 
     input {
         display: block;
+        width: 100%;
         padding: 10px 46px 10px 10px;
         border: 2px solid #fff;
         border-radius: 30px;
         background: none;
         font-size: 20px;
         color: #ffffff;
+
+        @include breakpoint-mobile-portrait {
+            height: 38px;
+            font-size: 16px;
+        }
 
         &::placeholder {
             font-family: inherit;
@@ -24,6 +30,11 @@
        padding: 0;
        background: none;
        font-size: 22px;
+
+       @include breakpoint-mobile-portrait {
+           top: 9px;
+           font-size: 18px;
+       }
 
        &:hover {
            color: #fff;
