@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Search from './Search';
 import Checkbox from './Checkbox';
@@ -44,6 +44,37 @@ class Menu extends Component {
     }
 
     render() {
+        const mealsLength = this.props.meals.length;
+
+        const mealControls = (
+            <Fragment>
+                <Search />
+
+                <div className="menu__filters">
+                    <h2>Filters:</h2>
+
+                    <div className="menu__checkboxes" data-simplebar>
+                        <ul className="checkboxes">
+                            {
+                                this
+                                    .state
+                                    .filters
+                                    .map((filter, index) => {
+                                        return(
+                                            <li key={index}>
+                                                <Checkbox index={index} name={filter} activeFilters={this.props.activeFilters} onChange={this.filterMeals} />
+                                            </li>
+                                        );
+                                    })
+                            }
+                        </ul>
+                    </div>
+                </div>
+                
+                <button className="btn" onClick={this.setRandomMeal}>Get a random meal</button>
+            </Fragment>
+        );
+
         return (
             <div className="menu">
                 <button className="menu__close visible-xxs" onClick={this.openMenu}>
@@ -53,30 +84,7 @@ class Menu extends Component {
                 <div className="menu__inner">
                     {this.props.user.isAuthenticated ? <button className="btn btn--white" onClick={this.openItemMenu}>Add meal</button> : null}
 
-                    <Search />
-
-                    <div className="menu__filters">
-                        <h2>Filters:</h2>
-
-                        <div className="menu__checkboxes" data-simplebar>
-                            <ul className="checkboxes">
-                                {
-                                    this
-                                        .state
-                                        .filters
-                                        .map((filter, index) => {
-                                            return(
-                                                <li key={index}>
-                                                    <Checkbox index={index} name={filter} activeFilters={this.props.activeFilters} onChange={this.filterMeals} />
-                                                </li>
-                                            );
-                                        })
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <button className="btn" onClick={this.setRandomMeal}>Get a random meal</button>
+                    { mealsLength ? mealControls : <h3 className="menu__notice">Add meals<br />to unlock<br />further functionality</h3> }
                 </div>
             </div>
         );

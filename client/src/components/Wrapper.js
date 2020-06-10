@@ -15,6 +15,7 @@ import { loadUser } from './../redux/actions/userActions';
 import Loader from './Loader';
 
 export const placeholderImage = './placeholder.png';
+export const loadingGif = './loading-gif.gif';
 
 class Wrapper extends Component {
     componentDidMount() {

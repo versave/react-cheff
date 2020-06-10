@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { setMeal } from './../redux/actions/userActions'
 import Tag from './Tag';
 
-import { placeholderImage } from './Wrapper';
+import { placeholderImage, loadingGif } from './Wrapper';
 
 class Meal extends Component {
     openMeal = () => {
@@ -23,6 +23,10 @@ class Meal extends Component {
         return (
             <div className="meal" onClick={this.openMeal}>
                 <div className="meal__image">
+                    <figure>
+                        <img width="60" src={loadingGif} />
+                    </figure>
+
                     <figure style={{backgroundImage: `url(${image ? image : placeholderImage})`}}></figure>
                 </div>
 
