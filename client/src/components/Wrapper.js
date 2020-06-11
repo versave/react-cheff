@@ -36,7 +36,6 @@ class Wrapper extends Component {
                 </main>
                 
                 {showLoader ? <Loader /> : null}
-                
                 {signupMenu ? <Signup /> : null}
                 {loginMenu ? <Login /> : null}
                 {itemMenu ? <AddMeal /> : null}

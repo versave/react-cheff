@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { toggleSignupMenu } from '../redux/actions/userActions';
 import { signup } from '../redux/actions/userActions';
 import { clearErrors } from '../redux/actions/errorActions';
@@ -14,13 +13,6 @@ class Signup extends Component {
         repeatPassword: '',
         msg: null
     };
-
-    static propTypes = {
-        isAuthenticated: PropTypes.bool,
-        error: PropTypes.object.isRequired,
-        signup: PropTypes.func.isRequired,
-        clearErrors: PropTypes.func.isRequired
-    }
 
     componentDidUpdate(prevProps) {
         if(prevProps.error.msg.message !== this.props.error.msg.message) {

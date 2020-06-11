@@ -33,22 +33,6 @@ class MealMenu extends Component {
         this.setState({ [e.target.name]: e.target.value });
 
         if(e.target.type === 'file' && e.target.files[0] !== undefined) {
-            this.setState({ image: e.target.files[0] });
-
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                this.setState({ uploadBg: e.target.result });
-            };
-
-            reader.readAsDataURL(e.target.files[0]);
-        }
-    }
-
-    onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-
-        if(e.target.type === 'file' && e.target.files[0] !== undefined) {
             this.setState({image: e.target.files[0]});
             this.setState({imageUpdated: true});
             this.setState({hasImage: true});
